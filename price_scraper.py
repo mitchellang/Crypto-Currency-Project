@@ -1,5 +1,15 @@
+import numpy as np
+import urllib.request
+import json
+import pandas as pd
 
 
-class Scraper:
+def get_coin_list():
 
-    def __init__(self):
+    dataframe = pd.read_json("https://min-api.cryptocompare.com/data/all/coinlist")
+
+    print(dataframe.Data)
+
+    #TODO: Expand dictionary of dataframe.Data into table
+
+get_coin_list()
