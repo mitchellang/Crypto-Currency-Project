@@ -2,13 +2,37 @@ import numpy as np
 import urllib.request
 import json
 import pandas as pd
+import numpy as np
+import math
 
 
 def get_coin_list():
 
     dataframe = pd.read_json("https://min-api.cryptocompare.com/data/all/coinlist")
 
-    print(dataframe.Data)
+    data = dataframe.Data.tolist()
+
+    columns = list(data[0].keys())
+
+    coins = []
+
+    for i in data:
+
+        try:
+            coins.append(list(i.values()))
+
+        except AttributeError:
+            pass
+
+    print(pd.DataFrame(coins))
+        # try:
+        #     coins.append(data.values())
+        #
+        # except:
+        #     if math.isnan(i):
+        #
+        #         print(i)
+        #         break
 
     #TODO: Expand dictionary of dataframe.Data into table
 
