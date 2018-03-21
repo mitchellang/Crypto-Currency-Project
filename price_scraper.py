@@ -2,10 +2,14 @@ import numpy as np
 import urllib.request
 import json
 import pandas as pd
-import numpy as np
 import math
+from pandas.io.json import json_normalize
+import requests
 
 
+URL0 = "https://min-api.cryptocompare.com/data/histoday?"
+URL1 = "&tsym=USD&e=CCCAGG&allData=true"
+#https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&e=CCCAGG&allData=true
 def get_coin_list():
 
     dataframe = pd.read_json("https://min-api.cryptocompare.com/data/all/coinlist")
@@ -13,6 +17,8 @@ def get_coin_list():
     data = dataframe.Data.tolist()
 
     columns = list(data[0].keys())
+
+
 
     coins = []
 
@@ -36,4 +42,21 @@ def get_coin_list():
 
     #TODO: Expand dictionary of dataframe.Data into table
 
+
+
+# get_coin_list()
+
+
+def get_historical_price(coin_code):
+
+    requestURL = URL0 + "fsym=" + coin_code + URL1
+
+    dataframe = requests.get(requestURL).json()["Data"]
+
+    result = pd.DataFrame(dataframe)
+
+    return result
+
 get_coin_list()
+
+print(get_historical_price("BTC"))
